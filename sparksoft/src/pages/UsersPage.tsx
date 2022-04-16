@@ -6,7 +6,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import CreateUserForm from "../components/CreateUserForm";
 import UserContainer from "../components/UserContainer";
-import { fetchUsers } from "../redux/actions/UserActions";
+import { fetchUsers } from "../redux/slices/UserSlice";
 import { connect, useDispatch } from "react-redux";
 import UserInfoDialogUI from "../components/ui/UserInfoDialogUI";
 

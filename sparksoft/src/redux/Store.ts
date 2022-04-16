@@ -1,5 +1,5 @@
 import { configureStore, createStore, applyMiddleware } from '@reduxjs/toolkit';
-import UserActions from './actions/UserActions';
+import UserActions from './slices/UserSlice';
 import thunk from "redux-thunk"
 
 export const store = configureStore({

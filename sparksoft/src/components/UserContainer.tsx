@@ -2,7 +2,7 @@ import React, { Component, FC, Props, ReactElement, useEffect, useState } from "
 import validator from 'validator';
 import CreateUserFormUI from "./ui/CreateUserFormUI";
 import { connect, createSelectorHook, useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../redux/actions/UserActions";
+import { fetchUsers } from "../redux/slices/UserSlice";
 import { AnyAction, bindActionCreators } from "redux";
 import { iDBUserData, iUser } from "../helpers/interfaces/User";
 import UserContainerUI from "./ui/UserContainerUI";

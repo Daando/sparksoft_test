@@ -1,5 +1,4 @@
-import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { stat } from "fs";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { sampleApi } from "../../helpers/api/ApiCall";
 import { iDBUserData, iUser } from "../../helpers/interfaces/User";
 
@@ -19,7 +18,7 @@ const initialState: iDBUserData = {
 const userSlice = createSlice({
     name: 'users',
     initialState: initialState,
-    reducers:{},
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchUsers.pending, (state) => {
