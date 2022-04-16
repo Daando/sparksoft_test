@@ -1,10 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { iDBUserData } from '../helpers/interfaces/User';
+import { configureStore, createStore, applyMiddleware } from '@reduxjs/toolkit';
 import UserActions from './actions/UserActions';
-import { MainReducer } from './reducers/MainReducer';
+import thunk from "redux-thunk"
 
-export default configureStore({
+export const store = configureStore({
     reducer: {
-        users: UserActions
+        remoteUsers: UserActions
     }
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch
