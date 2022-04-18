@@ -11,7 +11,7 @@ export const fetchUsers = createAsyncThunk(
 );
 
 const initialState: iDBUserData = {
-    loading: 'idle',
+    apicallstate: 'idle',
     users: [] as iUser[]
 }
 
@@ -22,14 +22,14 @@ const userSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchUsers.pending, (state) => {
-                state.loading = 'pending';
+                state.apicallstate = 'pending';
             })
             .addCase(fetchUsers.rejected, (state) => {
-                state.loading = 'failed';
+                state.apicallstate = 'failed';
                 state.users = [];
             })
             .addCase(fetchUsers.fulfilled, (state, action) => {
-                state.loading = "fullfilled";
+                state.apicallstate = "fullfilled";
                 state.users = action.payload;
             })
     }

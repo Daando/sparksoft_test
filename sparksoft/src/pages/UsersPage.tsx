@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Box, Container } from "@mui/material";
+import { useState } from "react";
+import {
+    Box,
+    Container
+} from "@mui/material";
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import CreateUserForm from "../components/CreateUserForm";
 import UserContainer from "../components/UserContainer";
-import { fetchUsers } from "../redux/slices/UserSlice";
-import { connect, useDispatch } from "react-redux";
-import UserInfoDialogUI from "../components/ui/UserInfoDialogUI";
 
 export const UserPage = () => {
     const [currentTab, setCurrentTab] = useState("add_contact");

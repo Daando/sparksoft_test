@@ -65,40 +65,42 @@ const UserInfoDialogUI: FC<iProp> = (props) => {
                     <Divider />
                 </Stack>
                 <Typography marginBottom={2} marginTop={2}>Address information</Typography>
-                <Stack direction='column' spacing={1}>
-                    <Stack direction='row' justifyContent='space-between'>
-                        <Chip label='City' />
-                        <Chip icon={<LocationCityIcon />} label={props.user?.address.city} />
-                    </Stack>
-                    <Divider />
-                    <Stack direction='row' justifyContent='space-between'>
-                        <Chip label='Street' />
-                        <Chip icon={<SignpostIcon />} label={props.user?.address.street} />
-                    </Stack>
-                    <Divider />
-                    <Stack direction='row' justifyContent='space-between'>
-                        <Chip label='Suite' />
-                        <Chip icon={<ApartmentIcon />} label={props.user?.address.suite} />
-                    </Stack>
-                    <Divider />
-                    <Stack direction='row' justifyContent='space-between'>
-                        <Chip label='ZIP code' />
-                        <Chip icon={<CropFreeIcon />} label={props.user?.address.zipcode} />
-                    </Stack>
-                    <Divider />
-                    <Stack direction='row' justifyContent='space-between'>
-                        <Chip label='Geolocation' />
-                        <Stack direction='row'>
-                            <Tooltip title='Latitude'>
-                                <Chip icon={<CodeIcon />} label={props.user?.address.geo.lat} />
-                            </Tooltip>
-                            <Tooltip title='Longitude'>
-                                <Chip icon={<ExpandIcon />} label={props.user?.address.geo.lng} />
-                            </Tooltip>
+                {
+                    props.user?.address && (<Stack direction='column' spacing={1}>
+                        <Stack direction='row' justifyContent='space-between'>
+                            <Chip label='City' />
+                            <Chip icon={<LocationCityIcon />} label={props.user?.address.city} />
                         </Stack>
-                    </Stack>
-                    <Divider />
-                </Stack>
+                        <Divider />
+                        <Stack direction='row' justifyContent='space-between'>
+                            <Chip label='Street' />
+                            <Chip icon={<SignpostIcon />} label={props.user?.address.street} />
+                        </Stack>
+                        <Divider />
+                        <Stack direction='row' justifyContent='space-between'>
+                            <Chip label='Suite' />
+                            <Chip icon={<ApartmentIcon />} label={props.user?.address.suite} />
+                        </Stack>
+                        <Divider />
+                        <Stack direction='row' justifyContent='space-between'>
+                            <Chip label='ZIP code' />
+                            <Chip icon={<CropFreeIcon />} label={props.user?.address.zipcode} />
+                        </Stack>
+                        <Divider />
+                        <Stack direction='row' justifyContent='space-between'>
+                            <Chip label='Geolocation' />
+                            <Stack direction='row'>
+                                <Tooltip title='Latitude'>
+                                    <Chip icon={<CodeIcon />} label={props.user?.address.geo.lat} />
+                                </Tooltip>
+                                <Tooltip title='Longitude'>
+                                    <Chip icon={<ExpandIcon />} label={props.user?.address.geo.lng} />
+                                </Tooltip>
+                            </Stack>
+                        </Stack>
+                        <Divider />
+                    </Stack>)
+                }
             </DialogContent>
             <Divider />
             <DialogActions>

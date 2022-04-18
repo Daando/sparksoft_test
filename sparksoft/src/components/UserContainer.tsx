@@ -1,37 +1,57 @@
-import React, { Component, FC, Props, ReactElement, useEffect, useState } from "react";
-import validator from 'validator';
-import CreateUserFormUI from "./ui/CreateUserFormUI";
-import { connect, createSelectorHook, useDispatch, useSelector } from "react-redux";
+import {
+    useEffect,
+    useState
+} from "react";
+import {
+    useDispatch,
+    useSelector
+} from "react-redux";
 import { fetchUsers } from "../redux/slices/UserSlice";
-import { AnyAction, bindActionCreators } from "redux";
-import { iDBUserData, iUser } from "../helpers/interfaces/User";
+import {
+    iDBUserData,
+    iUser
+} from "../helpers/interfaces/User";
 import UserContainerUI from "./ui/UserContainerUI";
-import { ThunkDispatch } from "redux-thunk";
-import { createSelector } from "reselect";
-import { RootState, store } from "../redux/Store";
+import { RootState } from "../redux/Store";
+import { deleteUser } from "../redux/actions/UserActions";
 
 const UserContainer = () => {
-    //const remoteUsersSelector = createSelector((state: RootState) => state.remoteUsers, (state: iDBUserData) => state)
-    //const [remoteUsers, setremoteUsers] = useState(useSelector(remoteUsersSelector));
     const remoteUsers: iDBUserData = useSelector((state: RootState) => state.remoteUsers);
+    const localUsers: iUser[] = useSelector((state: RootState) => state.localUsers);
+
     const [userInfoDialogOpen, setuserInfoDialogOpen] = useState<boolean>(false);
     const [selectedUser, setselectedUser] = useState<iUser | undefined>(undefined);
+    const [searchString, setsearchString] = useState('');
 
     const openInfoModal = (user: iUser): void => {
         setselectedUser(user);
         setuserInfoDialogOpen(true);
     }
 
+    const handlesearchStringChange = (e) => {
+        setsearchString(e.target.value);
+    }
+
+    const dispatch = useDispatch();
+
+    const deleteItem = (id: string) => {
+        dispatch(deleteUser(id));
+    }
+
     useEffect(() => {
-        store.dispatch(fetchUsers());
+        dispatch(fetchUsers());
     }, [])
 
     return (<UserContainerUI
         remoteUserData={remoteUsers}
+        localUserData={localUsers}
         selectedUser={selectedUser as iUser}
         dialogIsOpen={userInfoDialogOpen}
+        searchString={searchString}
+        handlesearchStringChange={handlesearchStringChange}
         onDialogClose={() => setuserInfoDialogOpen(false)}
         openInfoModal={openInfoModal}
+        onUserDelete={deleteItem}
     />);
 }
 
