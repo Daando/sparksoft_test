@@ -1,85 +1,206 @@
-import React from "react";
-import { iUser } from '../helpers/interfaces/User';
-import validator from 'validator';
+import { useState } from "react";
+import validator from "validator";
 import CreateUserFormUI from "./ui/CreateUserFormUI";
+import { addUser } from "../redux/actions/UserActions";
+import { useDispatch } from "react-redux";
+import { isEmptyOrSpaces } from "../helpers/utils/Utils";
+import { iUser } from "../helpers/interfaces/User";
 
-interface iCreateUserFormState {
-    newUser: iUser;
-    nameError: boolean;
-    phoneError: boolean;
-    emailError: boolean;
-}
+const CreateUserForm = () => {
 
-class CreateUserForm extends React.Component {
-    state: iCreateUserFormState = {
-        newUser: {
-            email: '',
-            name: '',
-            company: {
-                bs: '',
-                catchPhrase: '',
-                name: ''
-            },
-            address: {
-                city: '',
-                geo: {
-                    lat: '',
-                    lng: ''
-                },
-                street: '',
-                suite: '',
-                zipcode: ''
-            },
-            phone: '',
-            username: '',
-            website: ''
-        },
-        emailError: false,
-        nameError: false,
-        phoneError: false
-    }
+    const [email, setemail] = useState('');
+    const [name, setname] = useState('');
+    const [phone, setphone] = useState('');
+    const [userName, setuserName] = useState('');
+    const [webSite, setwebSite] = useState('');
+
+    const [companyBs, setcompanyBs] = useState('');
+    const [companyName, setcompanyName] = useState('');
+    const [companyCatchPhrase, setcompanyCatchPhrase] = useState('');
+
+    const [addressCity, setaddressCity] = useState('');
+    const [addressStreet, setaddressStreet] = useState('');
+    const [addressSuite, setaddressSuite] = useState('');
+    const [addressZipCode, setaddressZipCode] = useState('');
+
+    const [addressLongitude, setaddressLongitude] = useState('');
+    const [addressLatitude, setaddressLatitude] = useState('');
+
+    const [nameError, setnameError] = useState(false);
+    const [userNameError, setuserNameError] = useState(false);
+    const [emailError, setemailError] = useState(false);
+    const [phoneError, setphoneError] = useState(false);
+    const [websiteError, setwebsiteError] = useState(false);
+
 
     /*
         TODO ! : Refactor input error checks with timeout to run test only, when user stopped typing
     */
 
-    handleNameChange = (e) => {
+    //#region Input field change handlers
+    const handleNameChange = (e) => {
         {/* 
             Note! : Regex test for name name changes - not tested for special cases - needs check
         */}
         const nameTester = new RegExp(/^[\p{L} ,.'-]+$/u);
-        this.setState({
-            newUser: { ...this.state.newUser, name: e.target.value }, nameError: !nameTester.test(e.target.value)
-        });
+        setname(e.target.value);
+        setnameError(!nameTester.test(e.target.value));
     }
 
-    handlePhoneChange = (e) => {
-        this.setState({
-            newUser: { ...this.state.newUser, name: e.target.value }
-        });
+    const handlePhoneChange = (e) => {
+        setphone(e.target.value);
+        setphoneError(!validator.isMobilePhone(e.target.value))
     }
 
-    handleEmailChange = (e) => {
-        this.setState({
-            newUser: { ...this.state.newUser, email: e.target.value }, nameError: !validator.isEmail(e.target.value)
-        });
+    const handleEmailChange = (e) => {
+        setemail(e.target.value);
+        setemailError(!validator.isEmail(e.target.value));
     }
 
-    render() {
-        return (
-            <CreateUserFormUI
-                name={this.state.newUser.name}
-                nameError={this.state.nameError}
-                handleNameChange={this.handleNameChange}
-                phone={this.state.newUser.phone}
-                handlePhoneChange={this.handlePhoneChange}
-                phoneError={this.state.phoneError}
-                email={this.state.newUser.email}
-                handleEmailChange={this.handleEmailChange}
-                emailError={this.state.emailError}
-            />
-        );
+    const handleUserNameChange = (e) => {
+        setuserName(e.target.value);
+        setuserNameError(isEmptyOrSpaces(e.target.value));
     }
+
+    const handleWebsiteChange = (e) => {
+        setwebSite(e.target.value);
+        setwebsiteError(!validator.isURL(e.target.value));
+    }
+
+    //#region Change handlers - address values
+    const handleAddressCityChange = (e) => {
+        setaddressCity(e.target.value);
+    }
+
+    const handleAddressStreetChange = (e) => {
+        setaddressStreet(e.target.value);
+    }
+
+    const handleAddressSuiteChange = (e) => {
+        setaddressSuite(e.target.value);
+    }
+
+    const handleAddressZipCodeChange = (e) => {
+        setaddressZipCode(e.target.value);
+    }
+
+    const handleAddressLatitudeChange = (e) => {
+        setaddressLatitude(e.target.value);
+    }
+
+    const handleAddressLongitudeChange = (e) => {
+        setaddressLongitude(e.target.value);
+    }
+
+    //#endregion
+
+    //#region Change handlers - company values
+    const handleCompanyBsChange = (e) => {
+        setcompanyBs(e.target.value);
+    }
+
+    const handleCompanyNameChange = (e) => {
+        setcompanyName(e.target.value);
+    }
+
+    const handleCompanyCatchPhraseChange = (e) => {
+        setcompanyCatchPhrase(e.target.value);
+    }
+
+    //#endregion
+    //#endregion
+    const dispatch = useDispatch();
+
+    const checkRequiredFields = () => !isEmptyOrSpaces(name) && !isEmptyOrSpaces(userName) && !isEmptyOrSpaces(email) && !isEmptyOrSpaces(phone) && !isEmptyOrSpaces(webSite)
+
+    const clearForm = () => {
+        setname('');
+        setuserName('');
+        setemail('');
+        setphone('');
+        setwebSite('');
+
+        setaddressCity('');
+        setaddressStreet('');
+        setaddressSuite('');
+        setaddressZipCode('');
+        setaddressLatitude('');
+
+        setcompanyBs('');
+        setcompanyCatchPhrase('');
+        setcompanyName('');
+    }
+
+    const addNewUser = () => {
+        if (!checkRequiredFields())
+            return;
+
+        dispatch(addUser({
+            name: name,
+            username: userName,
+            email: email,
+            phone: phone,
+            website: webSite,
+            address: {
+                street: addressStreet,
+                suite: addressSuite,
+                city: addressCity,
+                zipcode: addressZipCode,
+                geo: {
+                    lat: addressLatitude,
+                    lng: addressLongitude
+                }
+            },
+            company: {
+                name: companyName,
+                catchPhrase: companyCatchPhrase,
+                bs: companyBs
+            }
+        }));
+
+        clearForm();
+    }
+
+    return (
+        <CreateUserFormUI
+            name={name}
+            nameError={nameError}
+            handleNameChange={handleNameChange}
+            phone={phone}
+            handlePhoneChange={handlePhoneChange}
+            phoneError={phoneError}
+            email={email}
+            handleEmailChange={handleEmailChange}
+            emailError={emailError}
+            userName={userName}
+            handleUserNameChange={handleUserNameChange}
+            userNameError={userNameError}
+            website={webSite}
+            websiteError={websiteError}
+            handleWebsiteChange={handleWebsiteChange}
+            addUser={addNewUser}
+
+            city={addressCity}
+            handleCityChange={handleAddressCityChange}
+            street={addressStreet}
+            handleStreetChange={handleAddressStreetChange}
+            suite={addressSuite}
+            handleSuiteChange={handleAddressSuiteChange}
+            zipCode={addressZipCode}
+            handleZipCodeChange={handleAddressZipCodeChange}
+            latitude={addressLatitude}
+            handlelatitudeChange={handleAddressLatitudeChange}
+            longitude={addressLongitude}
+            handlelongitudeChange={handleAddressLongitudeChange}
+
+            companyName={companyName}
+            handlecompanyNameChange={handleCompanyNameChange}
+            companyBs={companyBs}
+            handlecompanyBsChange={handleCompanyBsChange}
+            companyCatchPhrase={companyCatchPhrase}
+            handlecompanyCatchPhraseChange={handleCompanyCatchPhraseChange}
+        />
+    );
 }
 
 export default CreateUserForm;

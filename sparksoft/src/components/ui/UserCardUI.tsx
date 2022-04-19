@@ -1,30 +1,25 @@
 import {
-    Avatar,
-    Box,
     Card,
     CardActions,
     CardContent,
-    CardHeader,
     CardMedia,
-    Divider,
-    Grid,
     IconButton,
-    InputAdornment,
     Stack,
-    TextField,
     Tooltip,
     Typography
 } from "@mui/material";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailIcon from '@mui/icons-material/Email';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import InfoIcon from '@mui/icons-material/Info';
 import { iUser } from "../../helpers/interfaces/User";
 import { FC } from "react";
+import { Delete } from "@mui/icons-material";
 
 interface iProps {
     user: iUser;
     openUserInfoDialog: (user: iUser) => void;
+    deletable?: boolean;
+    onDelete?: (id: number | string) => void;
 }
 
 const UserCardUI: FC<iProps> = (props) => {
@@ -62,6 +57,14 @@ const UserCardUI: FC<iProps> = (props) => {
                         <InfoIcon />
                     </IconButton>
                 </Tooltip>
+                {props.deletable && (
+                    <Tooltip title="Delete User" >
+                        <IconButton
+                            onClick={() => props.onDelete!(props.user.id!)}>
+                            <Delete />
+                        </IconButton>
+                    </Tooltip>
+                )}
             </CardActions>
         </Card >
     );
