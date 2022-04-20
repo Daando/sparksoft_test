@@ -56,7 +56,7 @@ const CreateUserFormUI: FC<iProps> = (props) => {
         <Box maxWidth={800}>
             <Grid container spacing={1} margin={1}>
                 <Grid xs={12} sm={6} padding={1}>
-                    <TextField fullWidth value={props.name} label="Name" error={props.nameError} onChange={props.handleNameChange}
+                    <TextField fullWidth value={props.name} label="Name*" error={props.nameError} onChange={props.handleNameChange}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -66,7 +66,7 @@ const CreateUserFormUI: FC<iProps> = (props) => {
                         }} />
                 </Grid>
                 <Grid xs={12} sm={6} padding={1}>
-                    <TextField fullWidth value={props.userName} label="Username" error={props.userNameError} onChange={props.handleUserNameChange}
+                    <TextField fullWidth value={props.userName} label="Username*" error={props.userNameError} onChange={props.handleUserNameChange}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -78,7 +78,7 @@ const CreateUserFormUI: FC<iProps> = (props) => {
             </Grid>
             <Grid container spacing={1} margin={1}>
                 <Grid xs={12} sm={6} padding={1}>
-                    <TextField fullWidth value={props.email} label="Email" error={props.emailError} onChange={props.handleEmailChange}
+                    <TextField fullWidth value={props.email} label="Email*" error={props.emailError} onChange={props.handleEmailChange}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -88,7 +88,7 @@ const CreateUserFormUI: FC<iProps> = (props) => {
                         }} />
                 </Grid>
                 <Grid xs={12} sm={6} padding={1}>
-                    <TextField fullWidth value={props.phone} label="Phone" error={props.phoneError} onChange={props.handlePhoneChange}
+                    <TextField fullWidth value={props.phone} label="Phone*" error={props.phoneError} onChange={props.handlePhoneChange}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -100,7 +100,7 @@ const CreateUserFormUI: FC<iProps> = (props) => {
             </Grid>
             <Grid container spacing={1} margin={1}>
                 <Grid xs={12} sm={6} padding={1}>
-                    <TextField fullWidth value={props.website} label="Website" error={props.websiteError} onChange={props.handleWebsiteChange}
+                    <TextField fullWidth value={props.website} label="Website*" error={props.websiteError} onChange={props.handleWebsiteChange}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
