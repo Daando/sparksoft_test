@@ -180,19 +180,19 @@ const CreateUserForm = () => {
     const addNewUser = () => {
         let user: iUser;
         if (!checkRequiredFields()) {
-            setinputErrorMessage('Hibás mező a felhasználói adatok közt! Ellenőrizze a mezőket!');
+            setinputErrorMessage('Error in one of the user fields! Check the columns!');
             sethasInputError(true);
             return;
         }
 
         if (checkAddressIsEmpty() || !checkAddressIsValid()) {
-            setinputErrorMessage('Hibás mező a cím adatok közt! Ellenőrizze a mezőket!');
+            setinputErrorMessage('Error in one of the address fields! Check the columns!');
             sethasInputError(true);
             return;
         }
 
-        if (!checkCompanyIsEmpty() || !checkCompanyIsValid()) {
-            setinputErrorMessage('Hibás mező a cím adatok közt! Ellenőrizze a mezőket!');
+        if (checkCompanyIsEmpty() || !checkCompanyIsValid()) {
+            setinputErrorMessage('Error in one of the company fields! Check the columns!');
             sethasInputError(true);
             return;
         }
@@ -219,7 +219,7 @@ const CreateUserForm = () => {
                 bs: companyBs
             }
         }
-
+        setuserAddSuccess(true);
         dispatch(addUser(user));
         clearForm();
     }

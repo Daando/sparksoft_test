@@ -168,7 +168,7 @@ const CreateUserFormUI: FC<iProps> = (props) => {
             </Snackbar>
             <Snackbar open={props.userAddSuccess} autoHideDuration={4000} onClose={() => props.onUserAddSuccessClose()}>
                 <Alert onClose={() => props.onUserAddSuccessClose()} severity="success" sx={{ width: '100%' }}>
-                    Sikeres művelet!
+                    User added sucessfully!
                 </Alert>
             </Snackbar>
         </Box>
