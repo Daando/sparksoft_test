@@ -1,7 +1,7 @@
 import { useState } from "react";
 import validator from "validator";
 import CreateUserFormUI from "./ui/CreateUserFormUI";
-import { addUser } from "../redux/actions/UserActions";
+import { addUser } from "../redux/actions/LocalUserActions";
 import { useDispatch } from "react-redux";
 import { isEmptyOrSpaces } from "../helpers/utils/Utils";
 import { iUser } from "../helpers/interfaces/User";
@@ -32,16 +32,13 @@ const CreateUserForm = () => {
     const [phoneError, setphoneError] = useState(false);
     const [websiteError, setwebsiteError] = useState(false);
 
-
     /*
         TODO ! : Refactor input error checks with timeout to run test only, when user stopped typing
     */
 
     //#region Input field change handlers
     const handleNameChange = (e) => {
-        {/* 
-            Note! : Regex test for name name changes - not tested for special cases - needs check
-        */}
+        //Note! : Regex test for name name changes - not tested for special cases - needs check
         const nameTester = new RegExp(/^[\p{L} ,.'-]+$/u);
         setname(e.target.value);
         setnameError(!nameTester.test(e.target.value));
@@ -111,7 +108,44 @@ const CreateUserForm = () => {
     //#endregion
     const dispatch = useDispatch();
 
-    const checkRequiredFields = () => !isEmptyOrSpaces(name) && !isEmptyOrSpaces(userName) && !isEmptyOrSpaces(email) && !isEmptyOrSpaces(phone) && !isEmptyOrSpaces(webSite)
+    const checkRequiredFields = () =>
+        !isEmptyOrSpaces(name) &&
+        !isEmptyOrSpaces(userName) &&
+        !isEmptyOrSpaces(email) &&
+        !isEmptyOrSpaces(phone) &&
+        !isEmptyOrSpaces(webSite) &&
+        !nameError &&
+        !userNameError &&
+        !emailError &&
+        !phoneError &&
+        !websiteError;
+
+    const checkAddressIsEmpty = () =>
+        isEmptyOrSpaces(addressCity) ||
+        isEmptyOrSpaces(addressStreet) ||
+        isEmptyOrSpaces(addressSuite) ||
+        isEmptyOrSpaces(addressZipCode) ||
+        isEmptyOrSpaces(addressLatitude) ||
+        isEmptyOrSpaces(addressLongitude);
+
+    /*Needs to be replaced with exact address validator package*/
+    const checkAddressIsValid = () =>
+        !isEmptyOrSpaces(addressCity) &&
+        !isEmptyOrSpaces(addressStreet) &&
+        !isEmptyOrSpaces(addressSuite) &&
+        !isEmptyOrSpaces(addressZipCode) &&
+        !isEmptyOrSpaces(addressLatitude) &&
+        !isEmptyOrSpaces(addressLongitude);
+
+    const checkCompanyIsEmpty = () =>
+        isEmptyOrSpaces(companyBs) ||
+        isEmptyOrSpaces(companyCatchPhrase) ||
+        isEmptyOrSpaces(companyName);
+
+    const checkCompanyIsValid = () =>
+        !isEmptyOrSpaces(companyBs) &&
+        !isEmptyOrSpaces(companyCatchPhrase) &&
+        !isEmptyOrSpaces(companyName);
 
     const clearForm = () => {
         setname('');
@@ -132,16 +166,23 @@ const CreateUserForm = () => {
     }
 
     const addNewUser = () => {
+        let user: iUser;
         if (!checkRequiredFields())
             return;
 
-        dispatch(addUser({
+        user = {
             name: name,
             username: userName,
             email: email,
             phone: phone,
             website: webSite,
-            address: {
+        }
+
+        if (!checkAddressIsEmpty()) {
+            if (checkAddressIsValid())
+                return;
+
+            user.address = {
                 street: addressStreet,
                 suite: addressSuite,
                 city: addressCity,
@@ -150,13 +191,21 @@ const CreateUserForm = () => {
                     lat: addressLatitude,
                     lng: addressLongitude
                 }
-            },
-            company: {
+            }
+        }
+
+        if (!checkCompanyIsEmpty()) {
+            if (!checkCompanyIsValid())
+                return;
+
+            user.company = {
                 name: companyName,
                 catchPhrase: companyCatchPhrase,
                 bs: companyBs
             }
-        }));
+        }
+
+        dispatch(addUser(user));
 
         clearForm();
     }

@@ -9,7 +9,7 @@ export interface iUser {
     email: string;
     address?: iAddress;
     phone: string;
-    website?: string;
+    website: string;
     company?: iCompany;
 }
 
