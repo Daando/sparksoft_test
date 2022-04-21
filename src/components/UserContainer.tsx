@@ -6,14 +6,14 @@ import {
     useDispatch,
     useSelector
 } from "react-redux";
-import { fetchUsers } from "../redux/slices/UserSlice";
 import {
     iDBUserData,
     iUser
 } from "../helpers/interfaces/User";
 import UserContainerUI from "./ui/UserContainerUI";
 import { RootState } from "../redux/Store";
-import { deleteUser } from "../redux/actions/UserActions";
+import { deleteUser } from "../redux/actions/LocalUserActions";
+import { fetchUsers } from "../redux/thunks/RemoteUserThunk";
 
 const UserContainer = () => {
     const remoteUsers: iDBUserData = useSelector((state: RootState) => state.remoteUsers);
@@ -32,6 +32,10 @@ const UserContainer = () => {
         setsearchString(e.target.value);
     }
 
+    const handleCloseInfoDialog = () => {
+        setuserInfoDialogOpen(false)
+    }
+
     const dispatch = useDispatch();
 
     const deleteItem = (id: string) => {
@@ -40,7 +44,7 @@ const UserContainer = () => {
 
     useEffect(() => {
         dispatch(fetchUsers());
-    }, [])
+    }, [dispatch])
 
     return (<UserContainerUI
         remoteUserData={remoteUsers}
@@ -49,7 +53,7 @@ const UserContainer = () => {
         dialogIsOpen={userInfoDialogOpen}
         searchString={searchString}
         handlesearchStringChange={handlesearchStringChange}
-        onDialogClose={() => setuserInfoDialogOpen(false)}
+        onDialogClose={handleCloseInfoDialog}
         openInfoModal={openInfoModal}
         onUserDelete={deleteItem}
     />);

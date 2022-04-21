@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { iUser } from "../../helpers/interfaces/User";
-import { addUser, deleteUser } from "../actions/UserActions";
+import { addUser, deleteUser } from "../actions/LocalUserActions";
 
 const localUserReducer = createReducer([] as iUser[], (builder) => {
     builder

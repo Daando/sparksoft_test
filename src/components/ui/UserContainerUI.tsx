@@ -61,7 +61,7 @@ const UserContainerUI: FC<iProps> = (props) => {
         </Box>}
       {props.remoteUserData.apicallstate === 'fullfilled' && (
         <Grid container spacing={3}>
-          {props.remoteUserData.users.filter(x => x.name.includes(props.searchString)).map((user) =>
+          {props.remoteUserData.users.filter(x => x.name.toLocaleLowerCase().includes(props.searchString.toLocaleLowerCase())).map((user) =>
             <Grid item xs={12} md={6} lg={4} key={user.id}>
               <UserCardUI user={user} openUserInfoDialog={props.openInfoModal} />
             </Grid>)}

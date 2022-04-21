@@ -1,14 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { sampleApi } from "../../helpers/api/ApiCall";
 import { iDBUserData, iUser } from "../../helpers/interfaces/User";
-
-export const fetchUsers = createAsyncThunk(
-    'users/fetch',
-    async () => {
-        const response = await sampleApi.get('/users');
-        return response.data
-    }
-);
+import { fetchUsers } from "../thunks/RemoteUserThunk";
 
 const initialState: iDBUserData = {
     apicallstate: 'idle',
@@ -16,7 +9,7 @@ const initialState: iDBUserData = {
 }
 
 const userSlice = createSlice({
-    name: 'users',
+    name: 'remoteUsers',
     initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -29,8 +22,14 @@ const userSlice = createSlice({
                 state.users = [];
             })
             .addCase(fetchUsers.fulfilled, (state, action) => {
-                state.apicallstate = "fullfilled";
-                state.users = action.payload;
+                if (!action.payload.error) {
+                    state.apicallstate = "fullfilled";
+                    state.users = action.payload.data;
+                }
+                else{
+                    state.apicallstate = 'failed';
+                    state.users = [];
+                }
             })
     }
 })

@@ -55,8 +55,8 @@ const CreateUserFormUI: FC<iProps> = (props) => {
     return (
         <Box maxWidth={800}>
             <Grid container spacing={1} margin={1}>
-                <Grid xs={12} sm={6} padding={1}>
-                    <TextField fullWidth value={props.name} label="Name*" error={props.nameError} onChange={props.handleNameChange}
+                <Grid item xs={12} sm={6} padding={1}>
+                    <TextField data-testid="name-field" fullWidth value={props.name} label="Name*" error={props.nameError} onChange={props.handleNameChange}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -65,8 +65,8 @@ const CreateUserFormUI: FC<iProps> = (props) => {
                             ),
                         }} />
                 </Grid>
-                <Grid xs={12} sm={6} padding={1}>
-                    <TextField fullWidth value={props.userName} label="Username*" error={props.userNameError} onChange={props.handleUserNameChange}
+                <Grid item xs={12} sm={6} padding={1}>
+                    <TextField data-testid="user_name-field" fullWidth value={props.userName} label="Username*" error={props.userNameError} onChange={props.handleUserNameChange}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -77,8 +77,8 @@ const CreateUserFormUI: FC<iProps> = (props) => {
                 </Grid>
             </Grid>
             <Grid container spacing={1} margin={1}>
-                <Grid xs={12} sm={6} padding={1}>
-                    <TextField fullWidth value={props.email} label="Email*" error={props.emailError} onChange={props.handleEmailChange}
+                <Grid item xs={12} sm={6} padding={1}>
+                    <TextField data-testid="email-field" fullWidth value={props.email} label="Email*" error={props.emailError} onChange={props.handleEmailChange}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -87,8 +87,8 @@ const CreateUserFormUI: FC<iProps> = (props) => {
                             ),
                         }} />
                 </Grid>
-                <Grid xs={12} sm={6} padding={1}>
-                    <TextField fullWidth value={props.phone} label="Phone*" error={props.phoneError} onChange={props.handlePhoneChange}
+                <Grid item xs={12} sm={6} padding={1}>
+                    <TextField data-testid="phone-field" fullWidth value={props.phone} label="Phone*" error={props.phoneError} onChange={props.handlePhoneChange}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -99,8 +99,8 @@ const CreateUserFormUI: FC<iProps> = (props) => {
                 </Grid>
             </Grid>
             <Grid container spacing={1} margin={1}>
-                <Grid xs={12} sm={6} padding={1}>
-                    <TextField fullWidth value={props.website} label="Website*" error={props.websiteError} onChange={props.handleWebsiteChange}
+                <Grid item xs={12} sm={6} padding={1}>
+                    <TextField data-testid="website-field" fullWidth value={props.website} label="Website*" error={props.websiteError} onChange={props.handleWebsiteChange}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -112,46 +112,46 @@ const CreateUserFormUI: FC<iProps> = (props) => {
             </Grid>
             <Divider />
             <Grid container spacing={1} margin={1}>
-                <Grid xs={12} sm={6} padding={1}>
+                <Grid item xs={12} sm={6} padding={1}>
                     <TextField fullWidth value={props.city} label="City" onChange={props.handleCityChange} />
                 </Grid>
-                <Grid xs={12} sm={6} padding={1}>
+                <Grid item xs={12} sm={6} padding={1}>
                     <TextField fullWidth value={props.street} label="Street" onChange={props.handleStreetChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} margin={1}>
-                <Grid xs={12} sm={6} padding={1}>
+                <Grid item xs={12} sm={6} padding={1}>
                     <TextField fullWidth value={props.suite} label="Suite" onChange={props.handleSuiteChange} />
                 </Grid>
-                <Grid xs={12} sm={6} padding={1}>
+                <Grid item xs={12} sm={6} padding={1}>
                     <TextField fullWidth value={props.zipCode} label="Zip code" onChange={props.handleZipCodeChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} margin={1}>
-                <Grid xs={12} sm={6} padding={1}>
+                <Grid item xs={12} sm={6} padding={1}>
                     <TextField fullWidth value={props.longitude} label="GEO Longitude" onChange={props.handlelongitudeChange} />
                 </Grid>
-                <Grid xs={12} sm={6} padding={1}>
+                <Grid item xs={12} sm={6} padding={1}>
                     <TextField fullWidth value={props.latitude} label="GEO Latitude" onChange={props.handlelatitudeChange} />
                 </Grid>
             </Grid>
             <Divider />
             <Grid container spacing={1} margin={1}>
-                <Grid xs={12} sm={6} padding={1}>
+                <Grid item xs={12} sm={6} padding={1}>
                     <TextField fullWidth value={props.companyName} label="Company name" onChange={props.handlecompanyNameChange} />
                 </Grid>
-                <Grid xs={12} sm={6} padding={1}>
+                <Grid item xs={12} sm={6} padding={1}>
                     <TextField fullWidth value={props.companyCatchPhrase} label="Company catchphrase" onChange={props.handlecompanyCatchPhraseChange} />
                 </Grid>
             </Grid>
             <Grid container spacing={1} margin={1}>
-                <Grid xs={12} sm={6} padding={1}>
+                <Grid item xs={12} sm={6} padding={1}>
                     <TextField fullWidth value={props.companyBs} label="Company BS" onChange={props.handlecompanyBsChange} />
                 </Grid>
             </Grid>
-            <Grid container justifyContent='center'>
-                <Button onClick={() => props.addUser()} variant='contained' color='success'>
-                    Add new user
+            <Grid item container justifyContent='center'>
+                <Button data-testid="add_contact" onClick={() => props.addUser()} variant='contained' color='success'>
+                    Add new contact
                 </Button>
             </Grid>
         </Box>

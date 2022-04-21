@@ -1,11 +1,10 @@
 import { useState } from "react";
 import validator from "validator";
 import CreateUserFormUI from "./ui/CreateUserFormUI";
-import { addUser } from "../redux/actions/UserActions";
+import { addUser } from "../redux/actions/LocalUserActions";
 import { useDispatch } from "react-redux";
 import { isEmptyOrSpaces } from "../helpers/utils/Utils";
 import { iUser } from "../helpers/interfaces/User";
-import { Phone } from "@mui/icons-material";
 
 const CreateUserForm = () => {
 
@@ -39,9 +38,7 @@ const CreateUserForm = () => {
 
     //#region Input field change handlers
     const handleNameChange = (e) => {
-        {/* 
-            Note! : Regex test for name name changes - not tested for special cases - needs check
-        */}
+        //Note! : Regex test for name name changes - not tested for special cases - needs check
         const nameTester = new RegExp(/^[\p{L} ,.'-]+$/u);
         setname(e.target.value);
         setnameError(!nameTester.test(e.target.value));

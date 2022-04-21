@@ -1,6 +1,6 @@
-import { iUser } from "../../helpers/interfaces/User";
-import { addUser, deleteUser } from "../actions/UserActions";
-import localUserReducer from "./LocalUserReducer"
+import { iUser } from "../helpers/interfaces/User";
+import { addUser, deleteUser } from "../redux/actions/LocalUserActions";
+import localUserReducer from "../redux/reducers/LocalUserReducer"
 
 const initialState: iUser[] = [];
 
