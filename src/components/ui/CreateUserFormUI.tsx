@@ -1,9 +1,11 @@
 import {
+    Alert,
     Box,
     Button,
     Divider,
     Grid,
     InputAdornment,
+    Snackbar,
     TextField
 } from "@mui/material";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -48,6 +50,11 @@ interface iProps {
     companyCatchPhrase: string;
     handlecompanyCatchPhraseChange: (e: any) => void;
     addUser: () => void;
+    hasInputError: boolean;
+    inputErrorMessage: string;
+    onInputErrorAlertClose: () => void;
+    userAddSuccess: boolean;
+    onUserAddSuccessClose: () => void;
 }
 
 
@@ -154,6 +161,16 @@ const CreateUserFormUI: FC<iProps> = (props) => {
                     Add new contact
                 </Button>
             </Grid>
+            <Snackbar open={props.hasInputError} autoHideDuration={4000} onClose={() => props.onInputErrorAlertClose()}>
+                <Alert onClose={() => props.onInputErrorAlertClose()} severity="error" sx={{ width: '100%' }}>
+                    {props.inputErrorMessage}
+                </Alert>
+            </Snackbar>
+            <Snackbar open={props.userAddSuccess} autoHideDuration={4000} onClose={() => props.onUserAddSuccessClose()}>
+                <Alert onClose={() => props.onUserAddSuccessClose()} severity="success" sx={{ width: '100%' }}>
+                    User added sucessfully!
+                </Alert>
+            </Snackbar>
         </Box>
     );
 }

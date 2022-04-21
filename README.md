@@ -2,9 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## `You can run this application in docker`
+### `You can run this application in docker`
 
-### docker-compose up
+## docker-compose up
 
 Creates a build then start a docker container default on port 80
 You can access the webpage at [http://localhost] after running docker compose.
