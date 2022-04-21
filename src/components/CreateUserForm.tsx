@@ -32,6 +32,20 @@ const CreateUserForm = () => {
     const [phoneError, setphoneError] = useState(false);
     const [websiteError, setwebsiteError] = useState(false);
 
+    const [hasInputError, sethasInputError] = useState(false);
+    const [inputErrorMessage, setinputErrorMessage] = useState('');
+
+    const [userAddSuccess, setuserAddSuccess] = useState(false);
+    const dispatch = useDispatch();
+
+    const handleInputErrorAlertClose = () => {
+        sethasInputError(false);
+    }
+
+    const handleUserAddSuccessClose = () => {
+        setuserAddSuccess(false);
+    }
+
     /*
         TODO ! : Refactor input error checks with timeout to run test only, when user stopped typing
     */
@@ -88,7 +102,6 @@ const CreateUserForm = () => {
     const handleAddressLongitudeChange = (e) => {
         setaddressLongitude(e.target.value);
     }
-
     //#endregion
 
     //#region Change handlers - company values
@@ -106,7 +119,6 @@ const CreateUserForm = () => {
 
     //#endregion
     //#endregion
-    const dispatch = useDispatch();
 
     const checkRequiredFields = () =>
         !isEmptyOrSpaces(name) &&
@@ -167,8 +179,23 @@ const CreateUserForm = () => {
 
     const addNewUser = () => {
         let user: iUser;
-        if (!checkRequiredFields())
+        if (!checkRequiredFields()) {
+            setinputErrorMessage('Hibás mező a felhasználói adatok közt! Ellenőrizze a mezőket!');
+            sethasInputError(true);
             return;
+        }
+
+        if (checkAddressIsEmpty() || !checkAddressIsValid()) {
+            setinputErrorMessage('Hibás mező a cím adatok közt! Ellenőrizze a mezőket!');
+            sethasInputError(true);
+            return;
+        }
+
+        if (!checkCompanyIsEmpty() || !checkCompanyIsValid()) {
+            setinputErrorMessage('Hibás mező a cím adatok közt! Ellenőrizze a mezőket!');
+            sethasInputError(true);
+            return;
+        }
 
         user = {
             name: name,
@@ -176,13 +203,7 @@ const CreateUserForm = () => {
             email: email,
             phone: phone,
             website: webSite,
-        }
-
-        if (!checkAddressIsEmpty()) {
-            if (checkAddressIsValid())
-                return;
-
-            user.address = {
+            address: {
                 street: addressStreet,
                 suite: addressSuite,
                 city: addressCity,
@@ -191,14 +212,8 @@ const CreateUserForm = () => {
                     lat: addressLatitude,
                     lng: addressLongitude
                 }
-            }
-        }
-
-        if (!checkCompanyIsEmpty()) {
-            if (!checkCompanyIsValid())
-                return;
-
-            user.company = {
+            },
+            company: {
                 name: companyName,
                 catchPhrase: companyCatchPhrase,
                 bs: companyBs
@@ -206,7 +221,6 @@ const CreateUserForm = () => {
         }
 
         dispatch(addUser(user));
-
         clearForm();
     }
 
@@ -248,6 +262,11 @@ const CreateUserForm = () => {
             handlecompanyBsChange={handleCompanyBsChange}
             companyCatchPhrase={companyCatchPhrase}
             handlecompanyCatchPhraseChange={handleCompanyCatchPhraseChange}
+            hasInputError={hasInputError}
+            inputErrorMessage={inputErrorMessage}
+            onInputErrorAlertClose={handleInputErrorAlertClose}
+            userAddSuccess={userAddSuccess}
+            onUserAddSuccessClose={handleUserAddSuccessClose}
         />
     );
 }

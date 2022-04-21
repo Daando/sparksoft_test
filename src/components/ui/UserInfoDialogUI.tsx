@@ -35,7 +35,8 @@ const UserInfoDialogUI: FC<iProp> = (props) => {
             open={props.open}
             onClose={() => props.onClose()}
             fullWidth
-            maxWidth='md'>
+            maxWidth='md'
+            scroll='body'>
             <DialogTitle >
                 Contact information
             </DialogTitle>
@@ -65,42 +66,58 @@ const UserInfoDialogUI: FC<iProp> = (props) => {
                     <Divider />
                 </Stack>
                 <Typography marginBottom={2} marginTop={2}>Address information</Typography>
-                {
-                    props.user?.address && (<Stack direction='column' spacing={1}>
-                        <Stack direction='row' justifyContent='space-between'>
-                            <Chip label='City' />
-                            <Chip icon={<LocationCityIcon />} label={props.user?.address.city} />
+                <Stack direction='column' spacing={1}>
+                    <Stack direction='row' justifyContent='space-between'>
+                        <Chip label='City' />
+                        <Chip icon={<LocationCityIcon />} label={props.user?.address.city} />
+                    </Stack>
+                    <Divider />
+                    <Stack direction='row' justifyContent='space-between'>
+                        <Chip label='Street' />
+                        <Chip icon={<SignpostIcon />} label={props.user?.address.street} />
+                    </Stack>
+                    <Divider />
+                    <Stack direction='row' justifyContent='space-between'>
+                        <Chip label='Suite' />
+                        <Chip icon={<ApartmentIcon />} label={props.user?.address.suite} />
+                    </Stack>
+                    <Divider />
+                    <Stack direction='row' justifyContent='space-between'>
+                        <Chip label='ZIP code' />
+                        <Chip icon={<CropFreeIcon />} label={props.user?.address.zipcode} />
+                    </Stack>
+                    <Divider />
+                    <Stack direction='row' justifyContent='space-between'>
+                        <Chip label='Geolocation' />
+                        <Stack direction='row'>
+                            <Tooltip title='Latitude'>
+                                <Chip icon={<CodeIcon />} label={props.user?.address.geo.lat} />
+                            </Tooltip>
+                            <Tooltip title='Longitude'>
+                                <Chip icon={<ExpandIcon />} label={props.user?.address.geo.lng} />
+                            </Tooltip>
                         </Stack>
-                        <Divider />
-                        <Stack direction='row' justifyContent='space-between'>
-                            <Chip label='Street' />
-                            <Chip icon={<SignpostIcon />} label={props.user?.address.street} />
-                        </Stack>
-                        <Divider />
-                        <Stack direction='row' justifyContent='space-between'>
-                            <Chip label='Suite' />
-                            <Chip icon={<ApartmentIcon />} label={props.user?.address.suite} />
-                        </Stack>
-                        <Divider />
-                        <Stack direction='row' justifyContent='space-between'>
-                            <Chip label='ZIP code' />
-                            <Chip icon={<CropFreeIcon />} label={props.user?.address.zipcode} />
-                        </Stack>
-                        <Divider />
-                        <Stack direction='row' justifyContent='space-between'>
-                            <Chip label='Geolocation' />
-                            <Stack direction='row'>
-                                <Tooltip title='Latitude'>
-                                    <Chip icon={<CodeIcon />} label={props.user?.address.geo.lat} />
-                                </Tooltip>
-                                <Tooltip title='Longitude'>
-                                    <Chip icon={<ExpandIcon />} label={props.user?.address.geo.lng} />
-                                </Tooltip>
-                            </Stack>
-                        </Stack>
-                        <Divider />
-                    </Stack>)
-                }
+                    </Stack>
+                    <Divider />
+                </Stack>
+                <Typography marginBottom={2} marginTop={2}>Address information</Typography>
+                <Stack direction='column' spacing={1}>
+                    <Stack direction='row' justifyContent='space-between'>
+                        <Chip label='Company' />
+                        <Chip label={props.user?.company.name} />
+                    </Stack>
+                    <Divider />
+                    <Stack direction='row' justifyContent='space-between'>
+                        <Chip label='BS' />
+                        <Chip label={props.user?.company.bs} />
+                    </Stack>
+                    <Divider />
+                    <Stack direction='row' justifyContent='space-between'>
+                        <Chip label='Catchphrase' />
+                        <Chip label={props.user?.company.catchPhrase} />
+                    </Stack>
+                    <Divider />
+                </Stack>
             </DialogContent>
             <Divider />
             <DialogActions>

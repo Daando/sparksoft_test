@@ -7,10 +7,10 @@ export interface iUser {
     name: string;
     username: string;
     email: string;
-    address?: iAddress;
+    address: iAddress;
     phone: string;
     website: string;
-    company?: iCompany;
+    company: iCompany;
 }
 
 export interface iDBUserData {
